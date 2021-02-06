@@ -1,0 +1,15 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Self-care beauty products and household products",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Avon",
+    "Tupperware"
+  ],
+  "author": "Mnqobi Mzolo",
+  "license": "ISC"
+}

@@ -28,3 +28,41 @@ exports.create = (req, res) => {
 exports.read = (req, res) => {
 	return res.json(req.brand);
 };
+
+exports.update = (req, res) => {
+	const brand = req.brand;
+	brand.name = req.body.name;
+	brand.save((err, data) => {
+		if (err) {
+			return res.status(400).json({
+				error: errorHandler(err)
+			});
+		}
+		res.json(data);
+	});
+};
+
+exports.remove = (req, res) => {
+	const brand = req.brand;
+	brand.remove((err, data) => {
+		if (err) {
+			return res.status(400).json({
+				error: errorHandler(err)
+			});
+		}
+		res.json({
+			message: 'Brand deleted'
+		});
+	});
+};
+
+exports.list = (req, res) => {
+	Brand.find().exec((err, data) => {
+		if (err) {
+			return res.status(400).json({
+				error: errorHandler(err)
+			});
+		}
+		res.json(data);
+	});
+};

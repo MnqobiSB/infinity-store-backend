@@ -24,7 +24,7 @@ router.delete(
 	isAdmin,
 	remove
 );
-router.get('/categories', list);
+router.get('/brands', list);
 
 router.param('brandId', brandById);
 router.param('userId', userById);

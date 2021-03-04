@@ -169,7 +169,7 @@ exports.list = (req, res) => {
 
 exports.listRelated = (req, res) => {
 	let limit = req.query.limit ? parseInt(req.query.limit) : 6;
-
+	// find all products that matches current product category accept current product
 	Product.find({ _id: { $ne: req.product }, category: req.product.category })
 		.limit(limit)
 		.populate('category', '_id name')
@@ -191,6 +191,17 @@ exports.listCategories = (req, res) => {
 			});
 		}
 		res.json(categories);
+	});
+};
+
+exports.listBrands = (req, res) => {
+	Product.distinct('brand', {}, (err, brands) => {
+		if (err) {
+			return res.status(400).json({
+				error: 'Brands not found'
+			});
+		}
+		res.json(brands);
 	});
 };
 
@@ -229,7 +240,7 @@ exports.listBySearch = (req, res) => {
 
 	Product.find(findArgs)
 		.select('-photo')
-		.populate('category')
+		.populate('category brand')
 		.sort([ [ sortBy, order ] ])
 		.skip(skip)
 		.limit(limit)
@@ -263,6 +274,9 @@ exports.listSearch = (req, res) => {
 		// assigne category value to query.category
 		if (req.query.category && req.query.category != 'All') {
 			query.category = req.query.category;
+		}
+		if (req.query.brand && req.query.brand != 'All') {
+			query.brand = req.query.brand;
 		}
 		// find the product based on query object with 2 properties
 		// search and category
